@@ -18,7 +18,7 @@
     // }
 
 //applyEffect(app.project.activeSequence.videoTracks[0].clips[1], File("~/Documents/Motion_01.json"));
-//exportEffect("Motion_01", app.project.activeSequence.videoTracks[0].clips[0], app.project.activeSequence, "~/Documents");
+exportEffect("Motion_01", app.project.activeSequence.videoTracks[0].clips[0], app.project.activeSequence, "~/Documents");
 
 function exportEffect(name, clip, sequence, saveLocation) {
     var exportFile = File(saveLocation+"/"+name+".json");
@@ -28,6 +28,7 @@ function exportEffect(name, clip, sequence, saveLocation) {
 
     for(var c = 0; c < clip.components.length; c++) {
         var thisComponent = clip.components[c];
+        if(thisComponent.displayName != "Motion" && thisComponent.displayName != "Opacity") {
         effectObj.components.push({name:thisComponent.displayName, matchName: thisComponent.matchName, properties:[]});
         var componentJSON = effectObj.components[c];
 
@@ -45,6 +46,7 @@ function exportEffect(name, clip, sequence, saveLocation) {
                 }
             }
         }
+    }
     }
     exportFile.open("w");
     exportFile.write(JSON.stringify(effectObj));
